@@ -176,7 +176,7 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            aws ec2 describe-instances \
+            aws ec2 describe-instanceees \
             \
                   --query 'Reservations[*].Instances[*].PublicIpAddress' \
                   --filters "Name=tag:project,Values=udapeople" \
@@ -197,7 +197,7 @@ jobs:
       - add_ssh_keys:
           fingerprints: [14:1e:5d:3f:f7:8c:00:3e:c9:36:3c:02:98:47:ba:0e]
       - attach_workspace:
-          at: ~/
+          at: ~/git
       - run:
           name: Install dependencies
           command: |
