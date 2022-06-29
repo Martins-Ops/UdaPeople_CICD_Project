@@ -12,13 +12,19 @@ commands:
 #           when: on_fail
 #           command: |
 #             aws cloudformation delete-stack --stack-name udapeople-backend- echo << parameters.CIRCLE_WORKFLOW_ID:0:7 >>
-#             aws cloudformation delete-stack --stack-name udapeople-frontend- echo << parameters.CIRCLE_WORKFLOW_ID:0:7 >>
-  print_pipeline_id:
-    parameters:
-      id: 
-        type: string
+#             aws cloudformation delete-stack --stack-name udapeople-frontend- echo << parameters.CIRCLE_
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     steps:
-      - run: echo << parameters.id >>         
+      - run:
+          name: Destroy environment
+          # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable 
+          # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} && 
+            aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+         
 #   revert-migrations: 
 #     description: Revert the last migration if successfully run in the current workflow.
 #     parameters:
@@ -180,7 +186,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
 
-      # - destroy-environment 
+      - destroy-environment 
   
 
   configure-infrastructure:
@@ -201,8 +207,8 @@ jobs:
           name: Configure server
           command: |
             cd .circleci/ansible
-            ansible-playbook -i inventory.txt configure-server.yml
-      # - destroy-environment 
+            ansible-playbook -i inventory.txt configuree-server.yml
+      - destroy-environment 
       
 #   run-migrations:
 #     docker:
