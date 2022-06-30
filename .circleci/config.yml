@@ -234,6 +234,7 @@ jobs:
             aws --version
             yum install -y python3
             python3 --version
+            pip3 --version
       # - run:
       #     name: Get backend url
       #     command: |
