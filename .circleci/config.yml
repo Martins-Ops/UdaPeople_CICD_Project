@@ -232,8 +232,7 @@ jobs:
           command: |
             yum install -y tar gzip
             aws --version
-            python3 --version
-
+            yum install python3
       # - run:
       #     name: Get backend url
       #     command: |
