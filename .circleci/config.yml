@@ -232,7 +232,7 @@ jobs:
           command: |
             yum install -y tar gzip
             aws --version
-            yum install python3
+            yum install rh-python36
       # - run:
       #     name: Get backend url
       #     command: |
