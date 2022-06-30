@@ -224,14 +224,16 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: amazon/aws-cli
+      - image: amazon/aws-cli  
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
             aws --version
-            sudo apt install python3
+            python3 --version
 
       # - run:
       #     name: Get backend url
