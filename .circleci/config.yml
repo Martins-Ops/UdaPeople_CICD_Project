@@ -234,7 +234,7 @@ jobs:
             aws --version
             yum install -y python3
             pip3 install ansible
-            yum install -y nodejs
+            yum install nodejs14
       # - run:
       #     name: Get backend url
       #     command: |
