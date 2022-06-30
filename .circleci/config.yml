@@ -230,14 +230,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --no-cache \
-                python3 \
-                py3-pip \
-            && pip3 install --upgrade pip \
-            && pip3 install \
-            awscli \
-            && rm -rf /var/cache/apk/*
-            apk add --update ansible
+            aws --version
+            sudo apt install python3
 
       # - run:
       #     name: Get backend url
