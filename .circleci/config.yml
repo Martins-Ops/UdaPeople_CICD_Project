@@ -230,9 +230,12 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apt update && apt install python3
-            apt install ansible
-            apt install nodejs
+            sudo -i
+            apt-get update
+            apt-get install python3
+            apt-get install python3
+            apt-get install ansible
+            apt-get install nodejs
       # - run:
       #     name: Get backend url
       #     command: |
