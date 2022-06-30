@@ -230,12 +230,15 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo -i
-            apt-get update
-            apt-get install python3
-            apt-get install python3
-            apt-get install ansible
-            apt-get install nodejs
+            apk add --no-cache \
+                python3 \
+                py3-pip \
+            && pip3 install --upgrade pip \
+            && pip3 install \
+            awscli \
+            && rm -rf /var/cache/apk/*
+            apk add --update ansible
+
       # - run:
       #     name: Get backend url
       #     command: |
