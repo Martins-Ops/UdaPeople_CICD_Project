@@ -234,7 +234,10 @@ jobs:
             aws --version
             yum install -y python3
             pip3 install ansible
-            yum install nodejs14
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+            . ~/.nvm/nvm.sh
+            nvm install --lts
+            npm --version
       # - run:
       #     name: Get backend url
       #     command: |
