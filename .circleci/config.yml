@@ -279,7 +279,7 @@ jobs:
             apk add --update nodejs npm        
       - attach_workspace:
           at: ~/
-      - run:
+      # - run:
           # name: Deploy backend
           # command: |
           #   # your code here
