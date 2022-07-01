@@ -250,37 +250,40 @@ jobs:
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
-      - destroy-environment
-      # - run:
-      #     name: Deploy frontend objects
-      #     command: |
-            # your code here
-
-
-            # export BACKEND_IP= $(aws ec2 describe-instances \
-            #                      \ 
-            #                            --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            #                            --filters "Name=tag:project,Values=udapeople
-            #                            --output text )
-
-     
-                    
-#   deploy-backend:
-#     docker
-#       # Docker image here that supports Ansible
-#     steps:
-#       # Checkout code from git
-#       # Add ssh keys with fingerprint
-#       # attach workspace
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Deploy backend
-#           command: |
-#             # your code here
-#       # Here's where you will add some code to rollback on failure  
+      - run:
+          name: Deploy frontend objects
+          command: |
+            cd frontend
+            npm install
+            npm run build
+            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:5} --recursive
+                  
+  deploy-backend:
+    docker: 
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: [14:1e:5d:3f:f7:8c:00:3e:c9:36:3c:02:98:47:ba:0e]
+      - run:
+          name: Install dependencies
+          command: |
+            # Instal ansible
+            apk add --update ansible
+            # Install tar
+            apk add --update tar
+            # Install gzip
+            apk add --update gzip
+            # Install nodejs and npm
+            apk add --update nodejs npm        
+      - attach_workspace:
+          at: ~/
+      - run:
+          # name: Deploy backend
+          # command: |
+          #   # your code here
+      # Here's where you will add some code to rollback on failure  
 
 #   smoke-test:
 #     docker:
@@ -353,18 +356,18 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [testing-infra]
+      # - deploy-infrastructure:
+      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #     filters:
+      #       branches:
+      #         only: [testing-infra]
       # - configure-infrastructure:
       #     requires: [deploy-infrastructure]
       # - run-migrations:
       #     requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [deploy-infrastructure]
-      # - deploy-backend:
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      - deploy-backend:
       #     requires: [run-migrations]
       # - smoke-test:
       #     requires: [deploy-backend, deploy-frontend]
