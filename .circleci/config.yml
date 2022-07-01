@@ -230,25 +230,37 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            # install gzip and tar
             yum install -y tar gzip
-            aws --version
+            # install python3
             yum install -y python3
+            # install ansible
             pip3 install ansible
+            # install nodejs and npm
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
             . ~/.nvm/nvm.sh
             nvm install --lts
-            npm --version
-      # - run:
-      #     name: Get backend url
-      #     command: |
-      #       # your code here
-      #       export API_URL="http://${BACKEND_IP}:3030"
-      #       echo "${API_URL}"
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Get backend url
+          command: |
+            # export BACKEND_IP= $(aws ec2 describe-instances \
+            #                      \ 
+            #                            --query 'Reservations[*].Instances[*].PublicIpAddress' \
+            #                            --filters "Name=tag:project,Values=udapeople
+            #                            --output text )
+            export BACKEND_IP = $(sed -n '2p' < inventory.txt)
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "API_URL = ${API_URL}"
+            echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+            cat frontend/.env
+      - destroy-environment
       # - run:
       #     name: Deploy frontend objects
       #     command: |
-      #       # your code here
-      # Here's where you will add some code to rollback on failure      
+            # your code here
+     
                     
 #   deploy-backend:
 #     docker
@@ -338,17 +350,17 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:
-      #         only: [testing-infra]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [testing-infra]
       # - configure-infrastructure:
       #     requires: [deploy-infrastructure]
       # - run-migrations:
       #     requires: [configure-infrastructure]
       - deploy-frontend
-      #     requires: [run-migrations]
+          requires: [deploy-infrastructure]
       # - deploy-backend:
       #     requires: [run-migrations]
       # - smoke-test:
