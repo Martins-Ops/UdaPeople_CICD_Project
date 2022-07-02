@@ -1,7 +1,7 @@
 ---
 - name: Unarchive a file that is already on the local path
   ansible.builtin.unarchive:
-    src: ./backend/artifact.tar.gz
+    src: files/artifact.tar.gz
     dest: /home/ubuntu
  
 - name: start app
