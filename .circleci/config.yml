@@ -308,7 +308,7 @@ jobs:
             tar -C backend -czvf artifact.tar.gz . 
             # Copying the artifact to files for EC2 uses
             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
-            cp --recursive dist ~/project/.circleci/ansible/roles/deploy/files/dist
+            cp --recursive artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is $(sed -n '2p' < inventory.txt)"
             cat inventory.txt
