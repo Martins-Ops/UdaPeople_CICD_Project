@@ -1,8 +1,8 @@
 ---
 - name: Unarchive a file that is already on the local path
   ansible.builtin.unarchive:
-    src: ~/project/files/dist
-    dest: /home/ubuntu
+    src: "files/dist"
+    dest: "/home/ubuntu"
  
 - name: start app
   shell: |
