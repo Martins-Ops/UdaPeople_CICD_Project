@@ -284,7 +284,17 @@ jobs:
             # Install gzip
             apk add --update gzip
             # Install nodejs and npm
-            apk add --update nodejs npm        
+            apk add --update nodejs npm  
+            # Install curl
+            apk add --update curl
+            # Install aws-cli
+            apk add --no-cache \
+                python3 \
+                py3-pip \
+            && pip3 install --upgrade pip \
+            && pip3 install \
+            awscli \
+            && rm -rf /var/cache/apk/*
       - attach_workspace:
           at: ~/
       - run:

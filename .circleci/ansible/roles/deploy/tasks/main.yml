@@ -1,7 +1,7 @@
 ---
 - name: Unarchive a file that is already on the remote machine
   ansible.builtin.unarchive:
-    src: backend/artifact.tar.gz
+    src: ./backend/artifact.tar.gz
     dest: /home/ubuntu
     remote_src: yes
  
