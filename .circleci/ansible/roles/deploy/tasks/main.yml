@@ -1,9 +1,8 @@
 ---
-- name: Unarchive a file that is already on the remote machine
+- name: Unarchive a file that is already on the local path
   ansible.builtin.unarchive:
     src: ./backend/artifact.tar.gz
     dest: /home/ubuntu
-    remote_src: yes
  
 - name: start app
   shell: |
