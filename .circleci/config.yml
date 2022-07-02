@@ -307,7 +307,7 @@ jobs:
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz .
             # Copying the artifact to files for EC2 uses
-            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
+            cp ~/project/backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is $(sed -n '2p' < inventory.txt)"
             cat inventory.txt
