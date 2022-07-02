@@ -19,6 +19,7 @@ commands:
     steps:
       - run:
           name: Revert migrations
+          when: on_fail
           command: |
             SUCCESS=$(curl --insecure  https://kvdb.io/NkF9ZQmpA6a38BnRjecc3m/migration_${CIRCLE_WORKFLOW_ID:0:7})
             if(( $SUCCESS==100 )); 
@@ -373,16 +374,16 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:hh
-      #         only: [testing-infra]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      - run-migrations
-          # requires: [configure-infrastructure]
-      # - deploy-frontend:h
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [testing-infra]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      # - deploy-frontend:
       #     requires: [run-migrations]
       # - deploy-backend:j
       #     requires: [run-migrations]
