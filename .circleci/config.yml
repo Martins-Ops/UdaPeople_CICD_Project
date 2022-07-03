@@ -243,7 +243,7 @@ jobs:
             # install ansible
             pip3 install ansible
             # install nodejs and npm
-            curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+            curl -sL https://rpm.nodesource.com/setup_10.x | bash -
             yum install -y nodejs
       - attach_workspace:
           at: ~/
