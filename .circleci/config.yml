@@ -29,7 +29,7 @@ commands:
           when: on_fail
           command: |
             SUCCESS=$(curl --insecure  https://kvdb.io/NkF9ZQmpA6a38BnRjecc3m/migration_<<parameters.workflowID>>)
-            if(( $SUCCESS==1 )); 
+            if(( $SUCCESS==100 )); 
             then
                 cd ~/project/backend
                 npm install
@@ -356,6 +356,7 @@ jobs:
           name: Get backend url
           command: |
             export BACKEND_IP=$(sed -n '2p' < .circleci/ansible/inventory.txt)
+            echo BACKEND_IP: "${BACKEND_IP}"
       - run:
           name: Backend smoke test.
           command: |
