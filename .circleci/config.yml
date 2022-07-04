@@ -364,7 +364,7 @@ jobs:
             echo BACKEND_IP: "${BACKEND_IP}"
             export API_URL="http://${BACKEND_IP}:3030" 
             echo "API_URL = ${API_URL}"
-            if curl "${API_URL}/api/status" | grep "ok"
+            if curl --ipv4 "${API_URL}/api/status" | grep "ok"
             then
                 return 0
             else
@@ -380,8 +380,8 @@ jobs:
                 return 1
             else
                 return 1
-      - destroy-environment: 
-          workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
+      # - destroy-environment: 
+      #     workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
           workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
 
