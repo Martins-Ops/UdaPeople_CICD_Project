@@ -229,7 +229,7 @@ jobs:
       - run:
           name: Send migration results to kvdb
           command: |
-            if grep -q "migrations" ~/project/backend/migrations_dump.txt
+            if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
                 curl https://kvdb.io/NkF9ZQmpA6a38BnRjecc3m/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '100'
             fi      
@@ -385,6 +385,7 @@ jobs:
                 return 1
             else
                 return 1
+            fi
       - destroy-environment: 
           workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
