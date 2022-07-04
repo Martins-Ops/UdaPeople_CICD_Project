@@ -32,8 +32,8 @@
 - name: Unarchive a file that is already on the local path
   become: yes
   unarchive:
-    src: "files/artifact.tar.gz"
-    dest: ~/
+    src: files/artifact.tar.gz
+    dest: .
  
 - name: start app
   shell: |

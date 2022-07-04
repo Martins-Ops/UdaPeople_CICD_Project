@@ -299,6 +299,8 @@ jobs:
             apk add --update nodejs npm  
             # Install curl
             apk add --update curl
+            #Install Tree
+            apk add --update tree
             # Install aws-cli
             apk add --no-cache \
                 python3 \
@@ -307,6 +309,7 @@ jobs:
             && pip3 install \
             awscli \
             && rm -rf /var/cache/apk/*
+
       - attach_workspace:
           at: ~/
       - run:
@@ -318,13 +321,15 @@ jobs:
             cd ..
             # Zip the directory
             tar -C backend -czvf artifact.tar.gz . 
-            # # Copying the artifact to files for EC2 uses
+            # Copying the artifact to files for EC2 uses
+            tree -afC /root/project/.circleci -I *node_modules*
             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
             mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is $(sed -n '2p' < inventory.txt)"
             cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml
+            ansible-playbook -i inventory.txt deploy-backend.yml \
+            --key-file ~/.ssh/id_rsa_141e5d3ff78c003ec9363c029847ba0e
       - destroy-environment: 
           workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
