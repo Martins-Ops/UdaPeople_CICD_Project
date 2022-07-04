@@ -32,9 +32,9 @@
   become: yes
   unarchive:
     src: files/artifact.tar.gz
-    dest: ~/
+    dest: .
  
 - name: start app
   shell: |
     pm2 stop all
-    pm2 start npm -- start ~/dist/main.js
+    pm2 start npm -- start ./dist/main.js
