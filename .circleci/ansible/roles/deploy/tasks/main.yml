@@ -37,5 +37,5 @@
  
 - name: start app
   shell: |
-    pm2 stop default
+    pm2 stop all
     pm2 start npm -- start 

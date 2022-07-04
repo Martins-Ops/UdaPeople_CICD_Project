@@ -330,8 +330,8 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml \
             --key-file ~/.ssh/id_rsa_141e5d3ff78c003ec9363c029847ba0e
-      - destroy-environment: 
-          workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
+      # - destroy-environment: 
+      #     workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
           workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
 
