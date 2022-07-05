@@ -382,7 +382,7 @@ jobs:
             echo ${URL}
             if curl -s ${URL} | grep "Welcome"
             then
-                return 1
+                return 0
             else
                 return 1
             fi
@@ -466,7 +466,38 @@ jobs:
                   echo '--------------Cannot CleanUp-------------------'
               fi
             
-
+  configure-node-exporter:
+    docker: 
+      - 
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: [14:1e:5d:3f:f7:8c:00:3e:c9:36:3c:02:98:47:ba:0e]
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+            apk add --no-cache \
+                python3 \
+                py3-pip \
+            && pip3 install --upgrade pip \
+            && pip3 install \
+            awscli \
+            && rm -rf /var/cache/apk/*     
+      - run:
+          name: Configure Node Exporter
+          command: |
+            cd .circleci/ansible 
+            echo inventory.txt
+            ansible-playbook -i inventory.txt configure-node-exp.yml \
+            --key-file ~/.ssh/id_rsa_141e5d3ff78c003ec9363c029847ba0e
+      - destroy-environment: 
+          workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
+      - revert-migrations:
+          workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
+          
 workflows:
   default:
     jobs:
