@@ -412,13 +412,13 @@ jobs:
             --query "Exports[?Name==\`WorkflowID\`].Value" \
             --no-paginate --output text) 
 
-            echo $OldWorkflowId >> ~/OldWorkflowID.txt
+            echo $OldWorkflowID >> ~/OldWorkflowID.txt
             cat ~/OldWorkflowID.txt
             cat ~/OldWorkflowID.txt
 
             aws cloudformation deploy \
             --template-file .circleci/files/cloudfront.yml \
-            --stack-name ProductionStack \
+            --stack-name "InitialStack-${OldWorkflowID}" \
             --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
             --tags project=udapeople
 
