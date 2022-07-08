@@ -463,7 +463,7 @@ jobs:
             if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
             then
                 echo '--------Delete Confirmed--------'
-                aws s3 rm "s3://${OldWorkflowID}" --recursive
+                aws s3 rm "s3://${OldWorkflowID}" 
                 aws cloudformation delete-stack \
                     --stack-name InitialStack
             else
