@@ -467,7 +467,7 @@ jobs:
                # aws cloudformation delete-stack \
                 #    --stack-name InitialStack
             else
-                echo '--------------Cannot CleanUp-------------------'
+                echo '--------------Cannot CleanUp--------------------'
             fi
             
   configure-node-exporter:
