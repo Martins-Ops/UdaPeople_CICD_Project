@@ -2,10 +2,8 @@
 
 ## Project Overview
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Martins-Ops/UdaPeople_CICD_Project/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/Martins-Ops/UdaPeople_CICD_Project/tree/main)
-
 This project deploys a full stack (frontend and backend) [NodeJS](https://nodejs.org/en/) application of the **UdaPeople** using the concept of CI/CD to enable automated building, testing and deployment.
-[CI/CD](https://en.wikipedia.org/wiki/CI/CD) in this project helps in deploying the application to production using Integrated Pipelines and [circleci](https://circleci.com/) as the CI/CD tool, the green status badge above which reads "PASSED" indicates that the jobs in the Pipeline was executed succesfully.
+[CI/CD](https://en.wikipedia.org/wiki/CI/CD) in this project helps in deploying the application to production using Integrated Pipelines and [circleci](https://circleci.com/) as the CI/CD tool.
 
 ### Prerequisites
 
