@@ -10,8 +10,11 @@ This project deploys a full stack (frontend and backend) [NodeJS](https://nodejs
 ### Prerequisites
 
 To get this project done ensure to have this tool installed and running on your local machine
+
 > [Git](https://git-scm.com/)
+
 > Create an account on [CircleCi](https://circleci.com/) and  setup the project from the documentaion. 
+
 > Create an account on [AWS](https://aws.amazon.com/)
 
 #### Project Sections
@@ -51,4 +54,4 @@ This Project uses [Prometheus](https://prometheus.io/) as a monitoring solution 
 
 The application can be accessed using either the CloudFront domain name or the public URL for your S3 Bucket. Upon a succesful deployment we should a similar frontend shown below.
 
-![frontend image](https://video.udacity-data.com/topher/2021/October/616e6ef4_screenshot-2021-10-14-at-1.23.28-am/screenshot-2021-10-14-at-1.23.28-am.png)
+![frontend images](https://video.udacity-data.com/topher/2021/October/616e6ef4_screenshot-2021-10-14-at-1.23.28-am/screenshot-2021-10-14-at-1.23.28-am.png)
